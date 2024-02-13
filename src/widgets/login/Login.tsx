@@ -6,11 +6,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { TextFieldController } from "../../components/TextFieldController";
 
 export const Login = () => {
-  const { register } = useForm();
+  const { control } = useForm();
 
   return (
     <Box
@@ -35,6 +36,14 @@ export const Login = () => {
           variant="outlined"
           InputLabelProps={{
             style: { color: "white" },
+          }}
+        />
+        <TextFieldController
+          name="firstName"
+          controllerProps={{ control, defaultValue: "sravya" }}
+          textFieldProps={{
+            variant: "outlined",
+            InputLabelProps: { style: { color: "white" } },
           }}
         />
         <TextField
