@@ -1,9 +1,13 @@
 import { RouteObject } from "react-router-dom";
-
-const du = () => <>Sravya</>;
+import { Login } from "../widgets/login/Login";
+const du = () => <>Dummy</>;
 const routes: RouteObject[] = [
   {
     path: "/",
+    Component: Login,
+  },
+  {
+    path: "/signup",
     Component: du,
   },
 ];
