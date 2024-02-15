@@ -7,8 +7,11 @@ const muiOverridenComponents = (palette?: PaletteOptions): Components => {
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "rgba(255,255,255, 0.3)",
+            },
             "&.Mui-focused fieldset": {
-              borderColor: "rgba(255,255,255,0.3)",
+              borderColor: "rgba(255,255,255)",
             },
           },
         },

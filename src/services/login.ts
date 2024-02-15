@@ -2,7 +2,7 @@ import { baseService } from "./baseService";
 
 const loginService = baseService.injectEndpoints({
   endpoints: (build) => ({
-    login: build.query({
+    login: build.mutation({
       query: ({ email, password }: { email: string; password: string }) => ({
         url: "/login",
         method: "POST",
@@ -15,8 +15,14 @@ const loginService = baseService.injectEndpoints({
   }),
 });
 
-const useLogin = ({ email, password }: { email: string; password: string }) => {
-  const { useLoginQuery } = loginService;
-  return useLoginQuery({ email, password });
+const useLogin = () => {
+  const { useLoginMutation } = loginService;
+  const [login, response] = useLoginMutation();
+  return {
+    trigger: ({ email, password }: { email: string; password: string }) =>
+      login({ email, password }),
+    response,
+  };
 };
+
 export { loginService, useLogin };

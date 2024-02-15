@@ -1,23 +1,35 @@
 import { TextField, TextFieldProps } from "@mui/material";
-import { Controller, ControllerProps } from "react-hook-form";
+import {
+  Controller,
+  ControllerProps,
+  FieldValues,
+  Path,
+} from "react-hook-form";
 
-export interface TextFieldControllerConfig {
-  readonly name: string;
+export interface TextFieldControllerConfig<
+  Inputs extends FieldValues = FieldValues
+> {
+  readonly name: Path<Inputs>;
   readonly textFieldProps: TextFieldProps;
-  readonly controllerProps: Omit<ControllerProps, "render" | "name">;
+  readonly controllerProps: Omit<ControllerProps<Inputs>, "render" | "name">;
 }
 
-export const TextFieldController = ({
+export const TextFieldController = <Inputs extends FieldValues = FieldValues>({
   name,
   textFieldProps,
   controllerProps,
-}: TextFieldControllerConfig) => {
-  console.log("dcd", name);
+}: TextFieldControllerConfig<Inputs>) => {
   return (
     <>
       <Controller
         name={name}
-        render={({ field }) => <TextField {...textFieldProps} {...field} />}
+        render={({ field, fieldState: { error } }) => (
+          <TextField
+            {...textFieldProps}
+            {...field}
+            helperText={error?.message}
+          />
+        )}
         {...controllerProps}
       />
     </>
