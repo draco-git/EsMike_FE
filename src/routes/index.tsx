@@ -1,11 +1,11 @@
 import { RouteObject } from "react-router-dom";
-import { Login } from "../widgets/login/Login";
 import { Profile } from "../pages/profile";
+import { LandingPage } from "../pages/landingPage";
 const du = () => <>Dummy</>;
 const routes: RouteObject[] = [
   {
     path: "/",
-    Component: Login,
+    Component: LandingPage,
   },
   {
     path: "/signup",
@@ -14,6 +14,10 @@ const routes: RouteObject[] = [
   {
     path: "/browse",
     Component: Profile,
+  },
+  {
+    path: "/login",
+    Component: LandingPage,
   },
 ];
 

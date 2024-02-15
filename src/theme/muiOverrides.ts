@@ -13,6 +13,12 @@ const muiOverridenComponents = (palette?: PaletteOptions): Components => {
             "&.Mui-focused fieldset": {
               borderColor: "rgba(255,255,255)",
             },
+            "&.Mui-active fieldset": {
+              borderColor: "rgba(255,255,255)",
+            },
+            ":hover fieldset": {
+              borderColor: "rgba(255,255,255, 0.7)",
+            },
           },
         },
       },

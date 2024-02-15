@@ -5,47 +5,61 @@ export const Profile = () => {
   return (
     <Box
       sx={{
-        // marginTop: "100px",
-        height: "100%",
-        gap: 3,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
         background: "rgba(0,0,0)",
       }}
     >
-      <center>
-        {" "}
-        <Typography variant="h1" color="white" sx={{ marginBottom: "40px" }}>
-          Who's watching?
-        </Typography>{" "}
-      </center>
       <Box
-        sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+        sx={{
+          gap: 3,
+          width: "100%",
+        }}
       >
-        {profiles.map((profile) => (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: "20px",
-              gap: 2,
-            }}
+        <center>
+          <Typography
+            color="white"
+            sx={{ mb: "40px", fontSize: "54px", fontWeight: 700 }}
           >
+            Who's watching?
+          </Typography>
+        </center>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          {profiles.map((profile) => (
             <Box
-              component="img"
               sx={{
-                height: "10vw",
-                borderRadius: "4px",
-                maxWidth: "200px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: "20px",
+                gap: 2,
               }}
-              alt="profile image"
-              src={profile.source}
-            />
-            <center>
-              {" "}
-              <Typography color="white">{profile.name}</Typography>{" "}
-            </center>
-          </Box>
-        ))}
+            >
+              <img
+                style={{
+                  height: "200px",
+                  borderRadius: "4px",
+                  maxWidth: "200px",
+                }}
+                alt="profile image"
+                src={profile.source}
+              />
+              <center>
+                <Typography fontSize={18} color="white">
+                  {profile.name}
+                </Typography>
+              </center>
+            </Box>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
