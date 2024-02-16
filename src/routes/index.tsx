@@ -1,7 +1,13 @@
-import { RouteObject } from "react-router-dom";
+import { RouteObject, useLocation } from "react-router-dom";
 import { Profile } from "../pages/profile";
 import { LandingPage } from "../pages/landingPage";
-const du = () => <>Dummy</>;
+
+const DUu = () => {
+  const location = useLocation();
+  console.log(location.state);
+  return <>dumy</>;
+};
+
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -9,7 +15,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/signup",
-    Component: du,
+    Component: DUu,
   },
   {
     path: "/browse",

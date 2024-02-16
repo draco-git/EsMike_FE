@@ -1,7 +1,64 @@
-import { Box } from "@mui/material";
-import { Login } from "../../widgets/login";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Navbar } from "../../components/navbar";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 
+const SignUp = () => {
+  const [email, setEmail] = useState<string>("");
+  const navigate = useNavigate();
+  return (
+    <Box sx={{ color: "white" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          gap: 1,
+        }}
+      >
+        <Typography fontSize="48px" fontWeight={700}>
+          Unlimited movies, TV shows and more
+        </Typography>
+        <Typography fontSize={20}>Watch anywhere. Cancel anytime.</Typography>
+        <Typography fontSize={20}>
+          Ready to watch? Enter your email to create or restart your membership.
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          my: 2,
+          display: "flex",
+          mx: "48px",
+          justifyContent: "center",
+          gap: 1,
+        }}
+      >
+        <TextField
+          sx={{ minWidth: "400px" }}
+          label="Email Address"
+          color="secondary"
+          InputLabelProps={{ style: { color: "white" } }}
+          InputProps={{ style: { color: "white" } }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/signup", { state: { email } });
+          }}
+          sx={{ textTransform: "none", fontSize: "24px", px: 1 }}
+          endIcon={<FontAwesomeIcon icon={faChevronRight} />}
+        >
+          Get Started
+        </Button>
+      </Box>
+    </Box>
+  );
+};
 export const LandingPage = () => {
   return (
     <Box>
@@ -21,7 +78,9 @@ export const LandingPage = () => {
           height: "100vh",
           width: "100vw",
           opacity: "0.4",
-          background: "black",
+          background:
+            "radial-gradient(circle, rgba(0,0,0) 0%, rgba(0,0,0) 10%)",
+          // background: "black",
         }}
       />
       <Navbar />
@@ -30,11 +89,10 @@ export const LandingPage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "transparent, black",
           height: "100vh",
         }}
       >
-        <Login />
+        <SignUp />
       </Box>
     </Box>
   );
