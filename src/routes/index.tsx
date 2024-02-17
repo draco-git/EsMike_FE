@@ -1,13 +1,19 @@
 import { RouteObject } from "react-router-dom";
 import { Profile } from "../pages/profile";
-// import { LandingPage } from "../pages/landingPage";
 import SignUp from "../widgets/signup/SignUp";
+import { LandingPage } from "../pages/landingPage";
 import { Login } from "../widgets/login";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    Component: Login,
+    Component: LandingPage,
+    children: [
+      {
+        path: "login",
+        Component: Login,
+      },
+    ],
   },
   {
     path: "/signup",
@@ -16,10 +22,6 @@ const routes: RouteObject[] = [
   {
     path: "/browse",
     Component: Profile,
-  },
-  {
-    path: "/login",
-    Component: Login,
   },
 ];
 

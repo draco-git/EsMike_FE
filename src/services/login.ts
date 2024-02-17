@@ -12,6 +12,14 @@ const loginService = baseService.injectEndpoints({
         },
       }),
     }),
+
+    checkUser: build.mutation({
+      query: ({ email }: { email: string }) => ({
+        url: "/checkUser",
+        method: "POST",
+        body: { email },
+      }),
+    }),
   }),
 });
 
@@ -25,4 +33,13 @@ const useLogin = () => {
   };
 };
 
-export { loginService, useLogin };
+const useCheckUser = () => {
+  const { useCheckUserMutation } = loginService;
+  const [checkUser, response] = useCheckUserMutation();
+  return {
+    checkUserExists: ({ email }: { email: string }) => checkUser({ email }),
+    response,
+  };
+};
+
+export { loginService, useLogin, useCheckUser };

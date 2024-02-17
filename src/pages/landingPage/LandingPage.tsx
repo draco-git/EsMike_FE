@@ -1,65 +1,79 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Navbar } from "../../components/navbar";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
+import { useCheckUser } from "../../services";
 
-const SignUp = () => {
-  const [email, setEmail] = useState<string>("");
-  const navigate = useNavigate();
-  return (
-    <Box sx={{ color: "white" }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          gap: 1,
-        }}
-      >
-        <Typography fontSize="48px" fontWeight={700}>
-          Unlimited movies, TV shows and more
-        </Typography>
-        <Typography fontSize={20}>Watch anywhere. Cancel anytime.</Typography>
-        <Typography fontSize={20}>
-          Ready to watch? Enter your email to create or restart your membership.
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          my: 2,
-          display: "flex",
-          mx: "48px",
-          justifyContent: "center",
-          gap: 1,
-        }}
-      >
-        <TextField
-          sx={{ minWidth: "400px" }}
-          label="Email Address"
-          color="secondary"
-          InputLabelProps={{ style: { color: "white" } }}
-          InputProps={{ style: { color: "white" } }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          onClick={() => {
-            navigate("/signup", { state: { email } });
-          }}
-          sx={{ textTransform: "none", fontSize: "24px", px: 1 }}
-          endIcon={<FontAwesomeIcon icon={faChevronRight} />}
-        >
-          Get Started
-        </Button>
-      </Box>
-    </Box>
-  );
-};
 export const LandingPage = () => {
+  const { checkUserExists } = useCheckUser();
+  const location = useLocation();
+
+  const EmailInputCard = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState<string>("");
+    const textFieldRef = useRef<HTMLLabelElement>(null);
+    return (
+      <Box sx={{ color: "white" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            gap: 1,
+          }}
+        >
+          <Typography fontSize="48px" fontWeight={700}>
+            Unlimited movies, TV shows and more
+          </Typography>
+          <Typography fontSize={20}>Watch anywhere. Cancel anytime.</Typography>
+          <Typography fontSize={20}>
+            Ready to watch? Enter your email to create or restart your
+            membership.
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            my: 2,
+            display: "flex",
+            mx: "48px",
+            justifyContent: "center",
+            gap: 1,
+          }}
+        >
+          <TextField
+            sx={{ minWidth: "400px" }}
+            label="Email Address"
+            color="secondary"
+            InputLabelProps={{ style: { color: "white" }, ref: textFieldRef }}
+            InputProps={{ style: { color: "white" } }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            onClick={() => {
+              if (!email) {
+                textFieldRef.current?.focus();
+              } else {
+                checkUserExists({ email }).then((response) => {
+                  if ("data" in response && response?.data?.success)
+                    navigate("login");
+                  else navigate("/signup", { state: { email } });
+                });
+              }
+            }}
+            sx={{ textTransform: "none", fontSize: "24px", px: 1 }}
+            endIcon={<FontAwesomeIcon icon={faChevronRight} />}
+          >
+            Get Started
+          </Button>
+        </Box>
+      </Box>
+    );
+  };
   return (
     <Box>
       <img
@@ -91,7 +105,11 @@ export const LandingPage = () => {
           height: "100vh",
         }}
       >
-        <SignUp />
+        {location.pathname.startsWith("/login") ? (
+          <Outlet />
+        ) : (
+          <EmailInputCard />
+        )}
       </Box>
     </Box>
   );
