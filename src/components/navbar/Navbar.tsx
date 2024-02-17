@@ -1,6 +1,9 @@
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 
-export const Navbar = () => {
+export interface NavbarConfig {
+  readonly showSignInButton?: boolean;
+}
+export const Navbar = ({ showSignInButton = true }: NavbarConfig) => {
   return (
     <AppBar
       position="fixed"
@@ -11,15 +14,17 @@ export const Navbar = () => {
           <img height={80} style={{ border: "10px solid red" }} />
         </Box>
 
-        <Box sx={{ flexGrow: 0 }}>
-          <Button
-            variant="contained"
-            sx={{ textTransform: "none" }}
-            href="login"
-          >
-            SignIn
-          </Button>
-        </Box>
+        {showSignInButton && (
+          <Box sx={{ flexGrow: 0 }}>
+            <Button
+              variant="contained"
+              sx={{ textTransform: "none" }}
+              href="login"
+            >
+              SignIn
+            </Button>
+          </Box>
+        )}
       </Toolbar>
     </AppBar>
   );

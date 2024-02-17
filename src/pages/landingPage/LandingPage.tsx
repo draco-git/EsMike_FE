@@ -9,11 +9,24 @@ import { useCheckUser } from "../../services";
 export const LandingPage = () => {
   const { checkUserExists } = useCheckUser();
   const location = useLocation();
+  const isLoginPage = location.pathname.startsWith("/login");
 
   const EmailInputCard = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const textFieldRef = useRef<HTMLLabelElement>(null);
+
+    const handleClick = () => {
+      if (!email) {
+        textFieldRef.current?.focus();
+      } else {
+        checkUserExists({ email }).then((response) => {
+          if ("data" in response && response?.data?.success)
+            navigate("login", { state: { email } });
+          else navigate("/signup", { state: { email } });
+        });
+      }
+    };
     return (
       <Box sx={{ color: "white" }}>
         <Box
@@ -51,20 +64,15 @@ export const LandingPage = () => {
             InputProps={{ style: { color: "white" } }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(event) => {
+              if (event.code === "Enter") {
+                handleClick();
+              }
+            }}
           />
           <Button
             variant="contained"
-            onClick={() => {
-              if (!email) {
-                textFieldRef.current?.focus();
-              } else {
-                checkUserExists({ email }).then((response) => {
-                  if ("data" in response && response?.data?.success)
-                    navigate("login");
-                  else navigate("/signup", { state: { email } });
-                });
-              }
-            }}
+            onClick={() => handleClick()}
             sx={{ textTransform: "none", fontSize: "24px", px: 1 }}
             endIcon={<FontAwesomeIcon icon={faChevronRight} />}
           >
@@ -96,7 +104,7 @@ export const LandingPage = () => {
             "linear-gradient(180deg, rgba(0,0,0,1) 10%, rgba(20,20,20,1) 40%, rgba(0,0,0,1) 90%)",
         }}
       />
-      <Navbar />
+      <Navbar showSignInButton={!isLoginPage} />
       <Box
         sx={{
           display: "flex",
@@ -105,11 +113,7 @@ export const LandingPage = () => {
           height: "100vh",
         }}
       >
-        {location.pathname.startsWith("/login") ? (
-          <Outlet />
-        ) : (
-          <EmailInputCard />
-        )}
+        {isLoginPage ? <Outlet /> : <EmailInputCard />}
       </Box>
     </Box>
   );

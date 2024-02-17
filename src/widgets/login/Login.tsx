@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { TextFieldController } from "../../components/textFieldController/TextFieldController";
 import { useLogin } from "../../services/login";
 import { useEffect } from "react";
@@ -19,7 +19,11 @@ interface LoginFormInputs {
 }
 
 export const Login = () => {
-  const { control, formState, handleSubmit } = useForm<LoginFormInputs>();
+  const location = useLocation();
+  const email = location.state?.email;
+  const { control, formState, handleSubmit } = useForm<LoginFormInputs>({
+    defaultValues: { emailOrPhone: email },
+  });
   const { errors } = formState;
   const { trigger, response } = useLogin();
   const navigate = useNavigate();
@@ -28,7 +32,7 @@ export const Login = () => {
     if (response?.data?.success) {
       localStorage.setItem(
         "accessToken",
-        response?.data?.response?.body?.token
+        response?.data?.response?.body?.token,
       );
       navigate("/browse");
     }

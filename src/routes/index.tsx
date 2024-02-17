@@ -3,6 +3,7 @@ import { Profile } from "../pages/profile";
 import SignUp from "../widgets/signup/SignUp";
 import { LandingPage } from "../pages/landingPage";
 import { Login } from "../widgets/login";
+import { ProtectedRoute } from "../widgets/protectedRoute";
 
 const routes: RouteObject[] = [
   {
@@ -21,7 +22,11 @@ const routes: RouteObject[] = [
   },
   {
     path: "/browse",
-    Component: Profile,
+    Component: () => (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
 ];
 
