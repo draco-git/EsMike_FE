@@ -1,9 +1,28 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Box, Button, FormControl, Typography } from "@mui/material";
+import { useLocation } from "react-router-dom";
+import { textFieldSX } from "./signUp.styles";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { TextFieldController } from "../../components/textFieldController/TextFieldController";
 
+interface SignUpFormInputs {
+  readonly email: string;
+  readonly password: string;
+  readonly phone?: string;
+}
 const SignUp = () => {
   const location = useLocation();
   const email = location.state?.email;
+  const { control } = useForm<SignUpFormInputs>({ defaultValues: { email } });
+
+  const onSubmit: SubmitHandler<SignUpFormInputs> = (data) => {
+    if (data.email && data.password) {
+      ({
+        email: data.email,
+        password: data.password,
+        phone: data.phone,
+      });
+    }
+  };
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", width: "100vw" }}>
@@ -17,49 +36,84 @@ const SignUp = () => {
         }}
       >
         <Typography sx={{ fontSize: "13px" }}>STEP 1 OF 3</Typography>
-        <Typography variant="h1">Welcome back!</Typography>
-        <Typography variant="h1">Joining Netflix is easy.</Typography>
+        <Typography variant="h1">
+          Create a password to start your membership
+        </Typography>
+        <Typography variant="h1">
+          Just a few more steps and you're done! We hate paperwork, too.
+        </Typography>
         <Typography>
           Enter your password and you'll be watching in no time.
         </Typography>
-        <Typography>Email</Typography>
-        <Typography>{email}</Typography>
-        <TextField
-          label="Enter your Password"
-          variant="outlined"
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "rgba(0,0,0, 0.3)",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "rgba(0,0,0)",
-              },
-              "&.Mui-active fieldset": {
-                borderColor: "rgba(0,0,0)",
-              },
-              ":hover fieldset": {
-                borderColor: "rgba(0,0,0, 0.7)",
-              },
-            },
-          }}
-        />
-        <Link
-          to="/"
-          style={{
-            textDecoration: "none",
-            color: "#0071eb",
-          }}
-        >
-          <Typography sx={{ ":hover": { textDecoration: "underline" } }}>
-            Forgot your password?
-          </Typography>
-        </Link>
-        <Button variant="contained" sx={{ borderRadius: "4px" }}>
-          <Typography fontSize="20px" fontWeight="400">
-            Next
-          </Typography>
-        </Button>
+        <form>
+          <FormControl>
+            <TextFieldController
+              name="email"
+              textFieldProps={{
+                label: "Email",
+                variant: "outlined",
+                sx: textFieldSX,
+              }}
+              controllerProps={{
+                control,
+                rules: {
+                  pattern: {
+                    value: new RegExp("^(.+@.+|d{10})$"),
+                    message: "Invalid email",
+                  },
+                },
+              }}
+            />
+            <TextFieldController
+              name="password"
+              textFieldProps={{
+                label: "Add a Password",
+                variant: "outlined",
+                sx: textFieldSX,
+              }}
+              controllerProps={{
+                control,
+                rules: {
+                  minLength: {
+                    value: 6,
+                    message: "Password should contain min 6 characters",
+                  },
+                },
+              }}
+            />
+            <TextFieldController
+              name="phone"
+              textFieldProps={{
+                label: "Phone number",
+                variant: "outlined",
+                sx: textFieldSX,
+              }}
+              controllerProps={{
+                control,
+                rules: {
+                  pattern: {
+                    value: new RegExp("^(d{10})$"),
+                    message: "Invalid Phone number",
+                  },
+                },
+              }}
+            />
+            <Button variant="contained" sx={{ borderRadius: "4px" }}>
+              <Typography fontSize="20px" fontWeight="400">
+                Next
+              </Typography>
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ borderRadius: "4px" }}
+            >
+              <Typography fontSize="20px" fontWeight="400">
+                Submit
+              </Typography>
+            </Button>
+          </FormControl>
+        </form>
       </Box>
     </Box>
   );
