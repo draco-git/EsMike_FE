@@ -1,21 +1,17 @@
-import { RouteObject, useLocation } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 import { Profile } from "../pages/profile";
-import { LandingPage } from "../pages/landingPage";
-
-const DUu = () => {
-  const location = useLocation();
-  console.log(location.state);
-  return <>dumy</>;
-};
+// import { LandingPage } from "../pages/landingPage";
+import SignUp from "../widgets/signup/SignUp";
+import { Login } from "../widgets/login";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    Component: LandingPage,
+    Component: Login,
   },
   {
     path: "/signup",
-    Component: DUu,
+    Component: SignUp,
   },
   {
     path: "/browse",
@@ -23,7 +19,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/login",
-    Component: LandingPage,
+    Component: Login,
   },
 ];
 
