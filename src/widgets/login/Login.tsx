@@ -26,6 +26,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (response?.data?.success) {
+      localStorage.setItem("accessToken", response?.data?.response?.token);
       navigate("/browse");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
