@@ -4,6 +4,10 @@ export interface LoginProps {
   readonly email: string;
   readonly password: string;
 }
+
+export interface SignUpProps extends LoginProps {
+  readonly phone?: string;
+}
 const loginService = baseService.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation({
@@ -26,10 +30,10 @@ const loginService = baseService.injectEndpoints({
     }),
 
     signUp: build.mutation({
-      query: ({ email, password }: LoginProps) => ({
+      query: ({ email, password, phone }: SignUpProps) => ({
         url: "/signup",
         method: "POST",
-        body: { email, password },
+        body: { email, password, phone },
       }),
     }),
   }),
@@ -39,8 +43,7 @@ const useLogin = () => {
   const { useLoginMutation } = loginService;
   const [login, response] = useLoginMutation();
   return {
-    trigger: ({ email, password }: { email: string; password: string }) =>
-      login({ email, password }),
+    trigger: (props: LoginProps) => login(props),
     response,
   };
 };
@@ -58,8 +61,7 @@ const useSignUp = () => {
   const { useSignUpMutation } = loginService;
   const [signUp, response] = useSignUpMutation();
   return {
-    signUp: ({ email, password }: { email: string; password: string }) =>
-      signUp({ email, password }),
+    signUp: (props: SignUpProps) => signUp(props),
     response,
   };
 };

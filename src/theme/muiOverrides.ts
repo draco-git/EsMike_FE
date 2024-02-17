@@ -24,6 +24,13 @@ const muiOverridenComponents = (palette?: PaletteOptions): Components => {
       },
       defaultProps: {},
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+        },
+      },
+    },
   };
 };
 

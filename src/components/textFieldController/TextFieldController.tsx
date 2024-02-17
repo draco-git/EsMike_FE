@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 
 export interface TextFieldControllerConfig<
-  Inputs extends FieldValues = FieldValues
+  Inputs extends FieldValues = FieldValues,
 > {
   readonly name: Path<Inputs>;
   readonly textFieldProps: TextFieldProps;
@@ -27,7 +27,7 @@ export const TextFieldController = <Inputs extends FieldValues = FieldValues>({
           <TextField
             {...textFieldProps}
             {...field}
-            helperText={error?.message}
+            helperText={textFieldProps.helperText || error?.message}
           />
         )}
         {...controllerProps}
