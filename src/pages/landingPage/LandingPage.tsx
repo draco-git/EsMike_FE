@@ -77,10 +77,9 @@ export const LandingPage = () => {
           position: "absolute",
           height: "100vh",
           width: "100vw",
-          opacity: "0.4",
+          opacity: "0.7",
           background:
-            "radial-gradient(circle, rgba(0,0,0) 0%, rgba(0,0,0) 10%)",
-          // background: "black",
+            "linear-gradient(180deg, rgba(0,0,0,1) 10%, rgba(20,20,20,1) 40%, rgba(0,0,0,1) 90%)",
         }}
       />
       <Navbar />
