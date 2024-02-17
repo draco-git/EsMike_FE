@@ -65,8 +65,8 @@ export const Login = () => {
               control,
               rules: {
                 pattern: {
-                  value: new RegExp("^(.+@.+|d{10})$"),
-                  message: "pattern mis match",
+                  value: new RegExp("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"),
+                  message: "Invalid email",
                 },
                 onChange(event) {
                   return event.target.value;

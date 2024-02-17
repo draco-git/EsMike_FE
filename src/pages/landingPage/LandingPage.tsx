@@ -1,10 +1,12 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Navbar } from "../../components/navbar";
 import { useRef, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 import { useCheckUser } from "../../services";
+import { TextFieldController } from "../../components/textFieldController/TextFieldController.tsx";
+import { useForm } from "react-hook-form";
 
 export const LandingPage = () => {
   const { checkUserExists } = useCheckUser();
@@ -15,8 +17,12 @@ export const LandingPage = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const textFieldRef = useRef<HTMLLabelElement>(null);
-
-    const handleClick = () => {
+    const {
+      control,
+      formState: { errors },
+      handleSubmit,
+    } = useForm<{ email: string }>();
+    const handleClick = (email: string) => {
       if (!email) {
         textFieldRef.current?.focus();
       } else {
@@ -48,6 +54,7 @@ export const LandingPage = () => {
           </Typography>
         </Box>
         <Box
+          component="form"
           sx={{
             my: 2,
             display: "flex",
@@ -55,24 +62,43 @@ export const LandingPage = () => {
             justifyContent: "center",
             gap: 1,
           }}
+          onSubmit={handleSubmit((data) => {
+            handleClick(data.email);
+          })}
         >
-          <TextField
-            sx={{ minWidth: "400px" }}
-            label="Email Address"
-            color="secondary"
-            InputLabelProps={{ style: { color: "white" }, ref: textFieldRef }}
-            InputProps={{ style: { color: "white" } }}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onKeyDown={(event) => {
-              if (event.code === "Enter") {
-                handleClick();
-              }
+          <TextFieldController
+            name="email"
+            textFieldProps={{
+              label: "Email Address",
+              color: "secondary",
+              InputLabelProps: {
+                style: { color: "white" },
+                ref: textFieldRef,
+              },
+              InputProps: { style: { color: "white" } },
+              value: email,
+              onChange: (e) => setEmail(e.target.value),
+              onKeyDown: (event) => {
+                if (event.code === "Enter") {
+                  handleClick(email);
+                }
+              },
+              error: !!errors.email?.message,
+            }}
+            controllerProps={{
+              control,
+              rules: {
+                pattern: {
+                  value: new RegExp("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"),
+                  message: "Invalid email",
+                },
+              },
             }}
           />
+
           <Button
+            type="submit"
             variant="contained"
-            onClick={() => handleClick()}
             sx={{ textTransform: "none", fontSize: "24px", px: 1 }}
             endIcon={<FontAwesomeIcon icon={faChevronRight} />}
           >
