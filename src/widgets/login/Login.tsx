@@ -110,7 +110,7 @@ export const Login = () => {
           New to Netflix?
         </Typography>
         <Link
-          to="/signup"
+          to="/"
           style={{ textDecoration: "none", marginLeft: "8px", color: "white" }}
         >
           <Typography variant="subtitle1" component="span">
