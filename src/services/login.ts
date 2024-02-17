@@ -1,9 +1,13 @@
 import { baseService } from "./baseService";
 
+export interface LoginProps {
+  readonly email: string;
+  readonly password: string;
+}
 const loginService = baseService.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation({
-      query: ({ email, password }: { email: string; password: string }) => ({
+      query: ({ email, password }: LoginProps) => ({
         url: "/login",
         method: "POST",
         body: {
@@ -18,6 +22,14 @@ const loginService = baseService.injectEndpoints({
         url: "/checkUser",
         method: "POST",
         body: { email },
+      }),
+    }),
+
+    signUp: build.mutation({
+      query: ({ email, password }: LoginProps) => ({
+        url: "/signup",
+        method: "POST",
+        body: { email, password },
       }),
     }),
   }),
@@ -42,4 +54,14 @@ const useCheckUser = () => {
   };
 };
 
-export { loginService, useLogin, useCheckUser };
+const useSignUp = () => {
+  const { useSignUpMutation } = loginService;
+  const [signUp, response] = useSignUpMutation();
+  return {
+    signUp: ({ email, password }: { email: string; password: string }) =>
+      signUp({ email, password }),
+    response,
+  };
+};
+
+export { loginService, useLogin, useCheckUser, useSignUp };

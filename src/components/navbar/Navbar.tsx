@@ -15,9 +15,9 @@ export const Navbar = () => {
           <Button
             variant="contained"
             sx={{ textTransform: "none" }}
-            href="/signup"
+            href="login"
           >
-            SignUp
+            SignIn
           </Button>
         </Box>
       </Toolbar>
