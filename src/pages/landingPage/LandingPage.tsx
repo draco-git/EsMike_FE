@@ -75,7 +75,7 @@ export const LandingPage = () => {
                 style: { color: "white" },
                 ref: textFieldRef,
               },
-              InputProps: { style: { color: "white" } },
+              InputProps: { style: { color: "white", width: "400px" } },
               value: email,
               onChange: (e) => setEmail(e.target.value),
               onKeyDown: (event) => {

@@ -4,21 +4,34 @@ import SignUp from "../widgets/signup/SignUp";
 import { LandingPage } from "../pages/landingPage";
 import { Login } from "../widgets/login";
 import { ProtectedRoute } from "../widgets/protectedRoute";
+import { UnProtectedRoute } from "../unProtectedRoutes/UnProtected";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    Component: LandingPage,
+    Component: () => (
+      <UnProtectedRoute>
+        <LandingPage />
+      </UnProtectedRoute>
+    ),
     children: [
       {
         path: "login",
-        Component: Login,
+        Component: () => (
+          <UnProtectedRoute>
+            <Login />
+          </UnProtectedRoute>
+        ),
       },
     ],
   },
   {
     path: "/signup",
-    Component: SignUp,
+    Component: () => (
+      <UnProtectedRoute>
+        <SignUp />
+      </UnProtectedRoute>
+    ),
   },
   {
     path: "/browse",
