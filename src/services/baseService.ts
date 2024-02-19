@@ -8,6 +8,8 @@ const baseService = createApi({
     mode: "cors",
     credentials: "same-origin",
     prepareHeaders: (headers) => {
+      const token = localStorage.getItem("accessToken");
+      headers.set("authorization", `Bearer ${token as string}`);
       headers.set("Content-Type", "application/json");
       return headers;
     },
