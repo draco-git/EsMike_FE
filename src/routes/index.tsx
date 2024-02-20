@@ -5,6 +5,7 @@ import { LandingPage } from "../pages/landingPage";
 import { Login } from "../widgets/login";
 import { ProtectedRoute } from "../widgets/protectedRoute";
 import { UnProtectedRoute } from "../unProtectedRoutes/UnProtected";
+import { Dashboard } from "../pages/dashboard";
 
 const routes: RouteObject[] = [
   {
@@ -38,6 +39,14 @@ const routes: RouteObject[] = [
     Component: () => (
       <ProtectedRoute>
         <Profile />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard",
+    Component: () => (
+      <ProtectedRoute>
+        <Dashboard />
       </ProtectedRoute>
     ),
   },
