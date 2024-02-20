@@ -1,5 +1,5 @@
 
-/*.react-player > video {*/
-/*    position: absolute;*/
-/*    object-fit: fill;*/
-/*}*/
+.react-player > video {
+    position: absolute;
+    object-fit: fill;
+}

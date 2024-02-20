@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { ReactElement } from "react";
 
 export interface ProtectedRouteConfig {
-  children: JSX.Element;
+  children: ReactElement;
 }
 export const ProtectedRoute = ({ children }: ProtectedRouteConfig) => {
   const token = localStorage.getItem("accessToken");

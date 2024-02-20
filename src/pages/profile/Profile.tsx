@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import { profiles } from "./mockProfile";
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -41,6 +43,9 @@ export const Profile = () => {
                 alignItems: "center",
                 margin: "20px",
                 gap: 2,
+              }}
+              onClick={() => {
+                if (profile.name === "User1") navigate("/dashboard");
               }}
             >
               <img

@@ -4,7 +4,7 @@ import SignUp from "../widgets/signup/SignUp";
 import { LandingPage } from "../pages/landingPage";
 import { Login } from "../widgets/login";
 import { ProtectedRoute } from "../widgets/protectedRoute";
-import { UnProtectedRoute } from "../unProtectedRoutes/UnProtected";
+import { UnProtectedRoute } from "../widgets/unProtectedRoutes/UnProtected";
 import { Dashboard } from "../pages/dashboard";
 
 const routes: RouteObject[] = [

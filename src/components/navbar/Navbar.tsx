@@ -1,4 +1,5 @@
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
+import { Logo } from "../logo";
 
 export interface NavbarConfig {
   readonly showSignInButton?: boolean;
@@ -11,9 +12,8 @@ export const Navbar = ({ showSignInButton = true }: NavbarConfig) => {
     >
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
-          <img height={80} style={{ border: "10px solid red" }} />
+          <Logo />
         </Box>
-
         {showSignInButton && (
           <Box sx={{ flexGrow: 0 }}>
             <Button
