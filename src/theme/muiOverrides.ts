@@ -31,6 +31,16 @@ const muiOverridenComponents = (palette?: PaletteOptions): Components => {
         },
       },
     },
+    MuiPopover: {
+      styleOverrides: {
+        root: {
+          pointerEvents: "none",
+        },
+        paper: {
+          pointerEvents: "none",
+        },
+      },
+    },
   };
 };
 

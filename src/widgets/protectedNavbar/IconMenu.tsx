@@ -1,5 +1,4 @@
 import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -13,10 +12,16 @@ import { Box } from "@mui/material";
 export default function IconMenu() {
   return (
     <Box
-      sx={{ width: 200, maxWidth: "100%", backgroundColor: "black", p: "10px" }}
+      sx={{
+        width: 200,
+        maxWidth: "100%",
+        backgroundColor: "black",
+        p: "10px",
+        pointerEvents: "auto",
+      }}
     >
       <MenuList sx={{ color: "white" }}>
-        <MenuItem>
+        <MenuItem href="/profile">
           <ListItemIcon sx={{ color: "white" }}>
             <FontAwesomeIcon icon={faPencil} />
           </ListItemIcon>

@@ -3,14 +3,9 @@ import {
   Avatar,
   Box,
   Button,
-  Fade,
-  IconButton,
-  Paper,
   Popover,
-  Popper,
   TextField,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import { Logo } from "../../components/logo";
 import { useNavigate } from "react-router-dom";
@@ -20,8 +15,8 @@ import {
   faSearch,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import IconMenu from "./IconMenu";
+import { useRef, useState } from "react";
+import IconMenu from "./IconMenu.tsx";
 
 const buttons = [
   { name: "Home", path: "/home" },
@@ -33,24 +28,44 @@ const buttons = [
 ];
 export const ProtectedNavbar = () => {
   const navigate = useNavigate();
+  const profileButton = useRef<HTMLDivElement | null>(null);
   const [openSearch, setOpenSearch] = useState(false);
-  const [openDropDown, setOpenDropDown] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLDivElement>(null);
+  const dropDownIconRef = useRef<SVGSVGElement | null>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    setOpenDropDown((previousOpen) => !previousOpen);
+  const rotateFontAwesomeIcon = () => {
+    if (dropDownIconRef.current) {
+      const currDeg = dropDownIconRef.current.style.transform;
+      if (currDeg === "rotate(0deg)") {
+        dropDownIconRef.current.style.transform = "rotate(180deg)";
+      } else {
+        dropDownIconRef.current.style.transform = "rotate(0deg)";
+      }
+      dropDownIconRef.current.style.transition = "transform";
+      dropDownIconRef.current.style.transitionDuration = "0.6s";
+      dropDownIconRef.current.style.transitionTimingFunction = "ease-in";
+    }
+  };
+  const handlePopoverOpen = (
+    _e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    setAnchorEl(profileButton.current);
+    rotateFontAwesomeIcon();
   };
 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    setOpenDropDown(true);
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setAnchorEl((prev) => {
+      if (prev) return null;
+      return event.currentTarget;
+    });
   };
 
   const handlePopoverClose = () => {
-    setOpenDropDown(false);
     setAnchorEl(null);
+    rotateFontAwesomeIcon;
   };
+
+  const openDropDown = !!anchorEl;
 
   return (
     <>
@@ -148,27 +163,33 @@ export const ProtectedNavbar = () => {
                 </Box>
               )}
             </Box>
-            <IconButton
-              size={"small"}
-              onClick={handleClick}
-              // onMouseEnter={handlePopoverOpen}
-              // onMouseLeave={handlePopoverClose}
-              onMouseOut={handlePopoverClose}
-              onMouseOver={handlePopoverOpen}
-            >
-              <Avatar variant="rounded" />
-              <FontAwesomeIcon
-                icon={faCaretDown}
-                style={{
-                  color: "white",
-                  marginLeft: "5px",
-                  transform: "rotateY: '180deg",
-                }}
-                size="2xs"
-              />
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Box
+                ref={profileButton}
+                sx={{ display: "flex" }}
+                onClick={handleClick}
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
+                aria-owns={openDropDown ? "mouse-over-popover" : undefined}
+              >
+                <Avatar variant="rounded" />
+                <FontAwesomeIcon
+                  ref={dropDownIconRef}
+                  icon={faCaretDown}
+                  style={{
+                    color: "white",
+                    marginLeft: "5px",
+                    alignSelf: "center",
+                    transition: "transform 2s",
+                    transitionTimingFunction: "ease",
+                  }}
+                  size="2xs"
+                />
+              </Box>
 
               <Popover
-                sx={{ zIndex: 1500 }}
+                id="mouse-over-popover"
                 open={openDropDown}
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -182,23 +203,14 @@ export const ProtectedNavbar = () => {
                 onClose={handlePopoverClose}
                 disableRestoreFocus
               >
-                {/* {({ TransitionProps }) => (
-                  <Fade {...TransitionProps} timeout={350}>
-                    <Paper>
-                      <Typography sx={{ p: 2 }}>
-                        The content of the Popper.
-                      </Typography>
-                    </Paper>
-                  </Fade>
-                )} */}
-                {/* <Box sx={{ backgroundColor: "black" }}>
-                  <Typography sx={{ p: 2, color: "white",  }}>
-                    The content of the Popper.
-                  </Typography>
-                </Box> */}
-                <IconMenu />
+                <Box
+                  onMouseEnter={handlePopoverOpen}
+                  onMouseLeave={handlePopoverClose}
+                >
+                  <IconMenu />
+                </Box>
               </Popover>
-            </IconButton>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>
