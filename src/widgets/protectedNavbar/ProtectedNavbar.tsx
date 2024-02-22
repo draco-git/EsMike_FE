@@ -6,6 +6,7 @@ import {
   Fade,
   IconButton,
   Paper,
+  Popover,
   Popper,
   TextField,
   Toolbar,
@@ -20,6 +21,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import IconMenu from "./IconMenu";
 
 const buttons = [
   { name: "Home", path: "/home" },
@@ -39,6 +41,17 @@ export const ProtectedNavbar = () => {
     setAnchorEl(event.currentTarget);
     setOpenDropDown((previousOpen) => !previousOpen);
   };
+
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setOpenDropDown(true);
+  };
+
+  const handlePopoverClose = () => {
+    setOpenDropDown(false);
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <AppBar position="fixed" sx={{ height: "80px", background: "black" }}>
@@ -135,22 +148,41 @@ export const ProtectedNavbar = () => {
                 </Box>
               )}
             </Box>
-            <IconButton size={"small"} onClick={handleClick}>
+            <IconButton
+              size={"small"}
+              onClick={handleClick}
+              // onMouseEnter={handlePopoverOpen}
+              // onMouseLeave={handlePopoverClose}
+              onMouseOut={handlePopoverClose}
+              onMouseOver={handlePopoverOpen}
+            >
               <Avatar variant="rounded" />
               <FontAwesomeIcon
                 icon={faCaretDown}
-                style={{ color: "white", marginLeft: "5px" }}
+                style={{
+                  color: "white",
+                  marginLeft: "5px",
+                  transform: "rotateY: '180deg",
+                }}
                 size="2xs"
               />
 
-              <Popper
-                sx={{ zIndex: 2 }}
+              <Popover
+                sx={{ zIndex: 1500 }}
                 open={openDropDown}
                 anchorEl={anchorEl}
-                placement="bottom-end"
-                transition
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                onClose={handlePopoverClose}
+                disableRestoreFocus
               >
-                {({ TransitionProps }) => (
+                {/* {({ TransitionProps }) => (
                   <Fade {...TransitionProps} timeout={350}>
                     <Paper>
                       <Typography sx={{ p: 2 }}>
@@ -158,8 +190,14 @@ export const ProtectedNavbar = () => {
                       </Typography>
                     </Paper>
                   </Fade>
-                )}
-              </Popper>
+                )} */}
+                {/* <Box sx={{ backgroundColor: "black" }}>
+                  <Typography sx={{ p: 2, color: "white",  }}>
+                    The content of the Popper.
+                  </Typography>
+                </Box> */}
+                <IconMenu />
+              </Popover>
             </IconButton>
           </Box>
         </Toolbar>
