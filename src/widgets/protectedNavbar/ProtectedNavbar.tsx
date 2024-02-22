@@ -42,20 +42,22 @@ export const ProtectedNavbar = () => {
         dropDownIconRef.current.style.transform = "rotate(0deg)";
       }
       dropDownIconRef.current.style.transition = "transform";
-      dropDownIconRef.current.style.transitionDuration = "0.6s";
+      dropDownIconRef.current.style.transitionDuration = "0.4s";
       dropDownIconRef.current.style.transitionTimingFunction = "ease-in";
     }
   };
-  const handlePopoverOpen = (
-    _e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
+  const handlePopoverOpen = () => {
     setAnchorEl(profileButton.current);
     rotateFontAwesomeIcon();
   };
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    rotateFontAwesomeIcon();
     setAnchorEl((prev) => {
-      if (prev) return null;
+      if (prev) {
+        return null;
+      }
+
       return event.currentTarget;
     });
   };
