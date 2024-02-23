@@ -7,15 +7,16 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-    slidesToSlide: 3, // optional, default to 1.
+    items: 6,
+    slidesToSlide: 6, // optional, default to 1.
     // partialVisibilityGutter: 20,
+    // paritialVisibilityGutter: 40,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -130,7 +131,6 @@ export const Slider = () => {
       showDots={false}
       responsive={responsive}
       ssr={true}
-      infinite={false}
       autoPlay={false}
       autoPlaySpeed={1000}
       keyBoardControl={true}
@@ -143,14 +143,20 @@ export const Slider = () => {
       itemClass="carousel-item-padding-40-px"
       customLeftArrow={<CustomLeftArrow />}
       customRightArrow={<CustomRightArrow />}
-      //   partialVisible
+      // partialVisible
       centerMode
+      infinite
     >
       {cardDetails.map((card) => {
         return (
-          <div style={{ backgroundColor: "blue", padding: 3 }}>
+          <Box
+            sx={{
+              padding: 3,
+              width: "250px",
+            }}
+          >
             <MovieCard title={card.title} subTitle={card.subTitle} />
-          </div>
+          </Box>
         );
       })}
     </Carousel>

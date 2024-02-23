@@ -36,13 +36,14 @@ export const ProtectedNavbar = () => {
   const rotateFontAwesomeIcon = () => {
     if (dropDownIconRef.current) {
       const currDeg = dropDownIconRef.current.style.transform;
-      if (currDeg === "rotate(0deg)") {
+      if (!currDeg || currDeg === "rotate(0deg)") {
         dropDownIconRef.current.style.transform = "rotate(180deg)";
-      } else {
+      }
+      if (currDeg === "rotate(180deg)") {
         dropDownIconRef.current.style.transform = "rotate(0deg)";
       }
       dropDownIconRef.current.style.transition = "transform";
-      dropDownIconRef.current.style.transitionDuration = "0.4s";
+      dropDownIconRef.current.style.transitionDuration = "0.2s";
       dropDownIconRef.current.style.transitionTimingFunction = "ease-in";
     }
   };
@@ -64,7 +65,7 @@ export const ProtectedNavbar = () => {
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
-    rotateFontAwesomeIcon;
+    rotateFontAwesomeIcon();
   };
 
   const openDropDown = !!anchorEl;
@@ -119,7 +120,7 @@ export const ProtectedNavbar = () => {
                   <Box sx={{ cursor: "pointer" }}>
                     <FontAwesomeIcon
                       icon={faSearch}
-                      size="sm"
+                      size="lg"
                       color={"white"}
                     />
                   </Box>
@@ -161,7 +162,11 @@ export const ProtectedNavbar = () => {
                   }}
                   sx={{ cursor: "pointer" }}
                 >
-                  <FontAwesomeIcon icon={faSearch} style={{ color: "white" }} />
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    style={{ color: "white" }}
+                    size="lg"
+                  />
                 </Box>
               )}
             </Box>
@@ -175,18 +180,21 @@ export const ProtectedNavbar = () => {
                 onMouseLeave={handlePopoverClose}
                 aria-owns={openDropDown ? "mouse-over-popover" : undefined}
               >
-                <Avatar variant="rounded" />
+                <Avatar
+                  variant="rounded"
+                  sx={{ width: "33px", height: "33px" }}
+                />
                 <FontAwesomeIcon
                   ref={dropDownIconRef}
                   icon={faCaretDown}
                   style={{
                     color: "white",
-                    marginLeft: "5px",
+                    marginLeft: "10px",
                     alignSelf: "center",
                     transition: "transform 2s",
                     transitionTimingFunction: "ease",
                   }}
-                  size="2xs"
+                  size="sm"
                 />
               </Box>
 

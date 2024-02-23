@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 // import { VideoPlayer } from "../../components/videoPlayer";
-import { Slider } from "../../components/slider/Slider";
+import { CustomSlider } from "../../components/customSlider";
 
 export const Dashboard = () => {
   const [playing, setPlaying] = useState<boolean>(false);
@@ -14,7 +14,7 @@ export const Dashboard = () => {
       /> */}
       <Typography mb="100px"> {}</Typography>
       <Button onClick={() => setPlaying(!playing)}>Play</Button>
-      <Slider />
+      <CustomSlider />
     </>
   );
 };
