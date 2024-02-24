@@ -1,7 +1,7 @@
 import Carousel, { ArrowProps } from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import { MovieCards } from "../movieCards/MovieCard";
+import { MovieCard } from "../movieCards/MovieCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -154,7 +154,7 @@ export const Slider = () => {
               width: "250px",
             }}
           >
-            <MovieCards />
+            <MovieCard />
           </Box>
         );
       })}

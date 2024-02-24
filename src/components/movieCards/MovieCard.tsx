@@ -2,7 +2,17 @@ import { Box, Button, Popover } from "@mui/material";
 import { useRef, useState } from "react";
 import { movieCardsListContainer } from "./movieCard.styles.ts";
 
-export const MovieCard = () => {
+const MovieImage = () => {
+  return (
+    <Box
+      component="img"
+      src="https://stable-diffusion-art.com/wp-content/uploads/2023/07/image-136-1024x683.png"
+      alt="Paella dish"
+      sx={{ backgroundSize: "cover", width: "100%" }}
+    />
+  );
+};
+const MovieCardWithActions = () => {
   return (
     <Box
       sx={{
@@ -13,12 +23,7 @@ export const MovieCard = () => {
       }}
     >
       <Box>
-        <Box
-          component="img"
-          src="https://stable-diffusion-art.com/wp-content/uploads/2023/07/image-136-1024x683.png"
-          alt="Paella dish"
-          sx={{ backgroundSize: "cover", width: "100%" }}
-        />
+        <MovieImage />
         <Box className="content">
           <Button>Madhav</Button>
         </Box>
@@ -27,30 +32,15 @@ export const MovieCard = () => {
   );
 };
 
-export const MovieCardImage = () => {
-  return (
-    <Box sx={{ width: 225 }}>
-      <Box
-        component="img"
-        src="https://stable-diffusion-art.com/wp-content/uploads/2023/07/image-136-1024x683.png"
-        alt="Paella dish"
-        sx={{ backgroundSize: "cover", width: "100%" }}
-      />
-    </Box>
-  );
-};
-
-export const MovieCards = () => {
+export const MovieCard = () => {
   const movieCardImage = useRef<HTMLDivElement | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = () => {
-    console.log("hrere");
     if (movieCardImage.current) setAnchorEl(movieCardImage.current);
   };
 
   const handlePopoverClose = () => {
-    console.log("close");
     setAnchorEl(null);
   };
   return (
@@ -60,8 +50,9 @@ export const MovieCards = () => {
           ref={movieCardImage}
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
+          width={225}
         >
-          <MovieCardImage />
+          <MovieImage />
         </Box>
 
         <Popover
@@ -87,7 +78,7 @@ export const MovieCards = () => {
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
           >
-            <MovieCard />
+            <MovieCardWithActions />
           </Box>
         </Popover>
       </Box>

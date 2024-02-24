@@ -5,7 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button } from "@mui/material";
 import { useRef } from "react";
-import { MovieCards } from "../movieCards/MovieCard.tsx";
+import { MovieCard } from "../movieCards/MovieCard.tsx";
 import "./customSlider.css";
 
 export const CustomSlider = () => {
@@ -86,7 +86,7 @@ export const CustomSlider = () => {
                 position: "relative",
               }}
             >
-              <MovieCards />
+              <MovieCard />
             </Box>
           ))}
         </Box>
@@ -174,8 +174,8 @@ export const SliderV2 = () => {
                 flex: "1 1 auto",
               }}
             >
-              {index === 7 ? <>madvhv</> : <MovieCards />}
-              {/*<MovieCards />*/}
+              {index === 7 ? <>madvhv</> : <MovieCard />}
+              {/*<MovieCard />*/}
             </li>
           ))}
         </ul>
