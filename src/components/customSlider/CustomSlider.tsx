@@ -1,3 +1,8 @@
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button } from "@mui/material";
 import { useRef } from "react";
 import { MovieCards } from "../movieCards/MovieCard.tsx";
@@ -12,7 +17,7 @@ export const CustomSlider = () => {
       const firstChildElement = currentElement?.firstElementChild;
       if (firstChildElement) {
         const { width } = firstChildElement.getBoundingClientRect();
-        currentElement.scrollBy(-width * 4, 0);
+        currentElement.scrollBy(-width * 7, 0);
         console.log(width);
       }
       // currentElement.scrollLeft = currentElement.clientWidth / 0.2;
@@ -31,7 +36,7 @@ export const CustomSlider = () => {
       // );
       if (firstChildElement) {
         const { width } = firstChildElement.getBoundingClientRect();
-        currentElement.scrollBy(width * 4, 0);
+        currentElement.scrollBy(width * 7, 0);
         console.log(width);
       }
     }
@@ -46,20 +51,34 @@ export const CustomSlider = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Button onClick={onPrevClick}>Prev</Button>
+      <Box sx={{ display: "flex", alignItems: "center", mx: 0.5 }}>
+        <Box
+          onClick={onPrevClick}
+          sx={{
+            zIndex: 10,
+            px: 0,
+            height: "80px",
+            ":hover": {
+              background: "rgba(0,0,0,0.6)",
+            },
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} size="xl" width={40} />
+        </Box>
         <Box
           ref={gridRef}
           sx={{
             display: "grid",
             overflow: "hidden",
             gridAutoFlow: "columns",
-            gap: 2,
-            mx: 2,
+            gap: "5px",
+            mx: 1,
             scrollBehavior: "smooth",
           }}
         >
-          {[...Array(20)].map((index) => (
+          {[...Array(20)].map((_item, index) => (
             <Box
               key={index}
               sx={{
@@ -71,7 +90,21 @@ export const CustomSlider = () => {
             </Box>
           ))}
         </Box>
-        <Button onClick={onNextClick}>Next</Button>
+        <Box
+          onClick={onNextClick}
+          sx={{
+            zIndex: 10,
+            px: 0,
+            height: "80px",
+            ":hover": {
+              background: "rgba(0,0,0,0.6)",
+            },
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <FontAwesomeIcon icon={faChevronRight} size="xl" width={40} />
+        </Box>
       </Box>
     </>
   );
@@ -88,7 +121,7 @@ export const SliderV2 = () => {
       const firstChildElement = currentElement?.firstElementChild;
       if (firstChildElement) {
         const { width } = firstChildElement.getBoundingClientRect();
-        currentElement.scrollBy(-width * 4, 0);
+        currentElement.scrollBy(-width * 6, 0);
         console.log(width);
       }
       // currentElement.scrollLeft = currentElement.clientWidth / 0.2;
@@ -107,7 +140,7 @@ export const SliderV2 = () => {
       // );
       if (firstChildElement) {
         const { width } = firstChildElement.getBoundingClientRect();
-        currentElement.scrollBy(width * 4, 0);
+        currentElement.scrollBy(width * 6, 0);
         console.log(width);
       }
     }
@@ -141,7 +174,8 @@ export const SliderV2 = () => {
                 flex: "1 1 auto",
               }}
             >
-              <MovieCards />
+              {index === 7 ? <>madvhv</> : <MovieCards />}
+              {/*<MovieCards />*/}
             </li>
           ))}
         </ul>

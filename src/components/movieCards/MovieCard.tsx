@@ -45,25 +45,29 @@ export const MovieCards = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = () => {
+    console.log("hrere");
     if (movieCardImage.current) setAnchorEl(movieCardImage.current);
   };
 
   const handlePopoverClose = () => {
-    console.log("here");
+    console.log("close");
     setAnchorEl(null);
   };
-
   return (
     <>
       <Box sx={movieCardsListContainer}>
-        <Box ref={movieCardImage} onMouseEnter={handlePopoverOpen}>
+        <Box
+          ref={movieCardImage}
+          onMouseEnter={handlePopoverOpen}
+          onMouseLeave={handlePopoverClose}
+        >
           <MovieCardImage />
         </Box>
 
         <Popover
           anchorEl={anchorEl}
           open={!!anchorEl}
-          marginThreshold={null}
+          marginThreshold={50}
           anchorOrigin={{
             vertical: "center",
             horizontal: "center",
@@ -72,16 +76,16 @@ export const MovieCards = () => {
             vertical: "center",
             horizontal: "center",
           }}
-          sx={{ pointerEvents: "none" }}
           onClose={handlePopoverClose}
-          transitionDuration={{ enter: 700, exit: 600 }}
+          disableRestoreFocus
         >
           <Box
-            onMouseLeave={handlePopoverClose}
-            onMouseEnter={handlePopoverOpen}
             sx={{
               width: 350,
+              pointerEvents: "auto",
             }}
+            onMouseEnter={handlePopoverOpen}
+            onMouseLeave={handlePopoverClose}
           >
             <MovieCard />
           </Box>
