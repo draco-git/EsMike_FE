@@ -1,45 +1,92 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Popover } from "@mui/material";
+import { useRef, useState } from "react";
+import { movieCardsListContainer } from "./movieCard.styles.ts";
 
-export const MovieCard = ({
-  title,
-  subTitle,
-}: {
-  title: string;
-  subTitle: string;
-}) => {
-  const [showActions, setShowActions] = useState(false);
+export const MovieCard = () => {
   return (
-    <Card
-      onMouseEnter={() => setShowActions(true)}
-      onMouseLeave={() => setShowActions(false)}
+    <Box
       sx={{
-        // width: "100%",
-        borderRadius: "6px",
-        boxShadow: "none",
-        transformOrigin: "50 50",
-        background: "blue",
-        // pointerEvents: "none",
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        pointerEvents: "auto",
       }}
     >
-      <CardMedia component="img" height="50" image="cdcd" alt="Paella dish" />
-      {showActions && (
-        <>
-          <CardContent>a,cdjb</CardContent>
+      <Box>
+        <Box
+          component="img"
+          src="https://stable-diffusion-art.com/wp-content/uploads/2023/07/image-136-1024x683.png"
+          alt="Paella dish"
+          sx={{ backgroundSize: "cover", width: "100%" }}
+        />
+        <Box className="content">
+          <Button>Madhav</Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
-          <CardActions>
-            <Button sx={{ background: "white" }}>madhav</Button>
-          </CardActions>
-        </>
-      )}
-    </Card>
+export const MovieCardImage = () => {
+  return (
+    <Box sx={{ width: 225 }}>
+      <Box
+        component="img"
+        src="https://stable-diffusion-art.com/wp-content/uploads/2023/07/image-136-1024x683.png"
+        alt="Paella dish"
+        sx={{ backgroundSize: "cover", width: "100%" }}
+      />
+    </Box>
+  );
+};
+
+export const MovieCards = () => {
+  const movieCardImage = useRef<HTMLDivElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  const handlePopoverOpen = () => {
+    if (movieCardImage.current) setAnchorEl(movieCardImage.current);
+  };
+
+  const handlePopoverClose = () => {
+    console.log("here");
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <Box sx={movieCardsListContainer}>
+        <Box ref={movieCardImage} onMouseEnter={handlePopoverOpen}>
+          <MovieCardImage />
+        </Box>
+
+        <Popover
+          anchorEl={anchorEl}
+          open={!!anchorEl}
+          marginThreshold={null}
+          anchorOrigin={{
+            vertical: "center",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "center",
+            horizontal: "center",
+          }}
+          sx={{ pointerEvents: "none" }}
+          onClose={handlePopoverClose}
+          transitionDuration={{ enter: 700, exit: 600 }}
+        >
+          <Box
+            onMouseLeave={handlePopoverClose}
+            onMouseEnter={handlePopoverOpen}
+            sx={{
+              width: 350,
+            }}
+          >
+            <MovieCard />
+          </Box>
+        </Popover>
+      </Box>
+    </>
   );
 };

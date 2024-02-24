@@ -1,14 +1,13 @@
 import Carousel, { ArrowProps } from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import { MovieCard } from "../movieCards/MovieCard";
+import { MovieCards } from "../movieCards/MovieCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { Box, IconButton, Typography } from "@mui/material";
-import zIndex from "@mui/material/styles/zIndex";
+import { Box } from "@mui/material";
 
 const responsive = {
   desktop: {
@@ -147,7 +146,7 @@ export const Slider = () => {
       centerMode
       infinite
     >
-      {cardDetails.map((card) => {
+      {cardDetails.map(() => {
         return (
           <Box
             sx={{
@@ -155,7 +154,7 @@ export const Slider = () => {
               width: "250px",
             }}
           >
-            <MovieCard title={card.title} subTitle={card.subTitle} />
+            <MovieCards />
           </Box>
         );
       })}
